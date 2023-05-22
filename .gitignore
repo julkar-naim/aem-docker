@@ -1,0 +1,7 @@
+# AEM
+crx-quickstart/
+aem-*.jar
+license.properties
+
+# Mac Book
+.DS_Store
