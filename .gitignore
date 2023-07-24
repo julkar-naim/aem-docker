@@ -5,3 +5,6 @@ license.properties
 
 # Mac Book
 .DS_Store
+
+#IntelijIdea
+.idea
