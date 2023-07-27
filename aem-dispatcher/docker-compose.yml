@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  author:
+    image: aem-dispatcher
+    ports:
+      - "80:80"
+    container_name: aem-dispatcher
+    networks:
+      - aem-docker
+
+networks:
+  aem-docker:

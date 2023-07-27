@@ -1,5 +1,5 @@
-# Base Image from Ubuntu
-FROM ubuntu:22.04
+# Base Image from Redhat
+FROM redhat/ubi9
 
 # Label Custom Metadata
 LABEL org.opencontainers.image.authors Mahedi Sabuj <sabuj.ict.mbstu@gmail.com>
