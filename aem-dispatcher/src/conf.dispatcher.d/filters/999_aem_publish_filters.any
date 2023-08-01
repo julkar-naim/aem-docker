@@ -1,0 +1,2 @@
+# deny everything and allow specific entries
+/0001 { /type "allow"  /glob "*" }

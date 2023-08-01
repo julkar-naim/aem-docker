@@ -2,7 +2,7 @@
   ## client headers which should be passed through to the render instances
   /clientheaders {
     $include "/etc/httpd/conf.dispatcher.d/clientheaders/777_aem_common_clientheaders.any";
-    $include "/etc/httpd/conf.dispatcher.d/clientheaders/777_aem_publish_clientheaders.any";
+    $include "/etc/httpd/conf.dispatcher.d/clientheaders/999_aem_publish_clientheaders.any";
   }
 
   ## hostname globbing for farm selection (virtual domain addressing)
