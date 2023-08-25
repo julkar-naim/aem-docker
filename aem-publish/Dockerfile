@@ -12,7 +12,7 @@ RUN apt-get update
 RUN apt-get install -y openjdk-11-jdk
 
 # Copy AEM Jar, Licence, Start Script
-COPY ./src /mnt/crx/publish
+COPY ./src/scripts /mnt/crx/publish
 
 # Change Working Directory
 WORKDIR /mnt/crx/publish
