@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.authors Mahedi Sabuj <sabuj.ict.mbstu@gmail.com>
 LABEL org.opencontainers.image.source https://github.com/MahediSabuj/aem-docker
 
 # Install HTTPD
-RUN yum update -y && yum install -y httpd && && yum clean all
+RUN yum update -y && yum install -y httpd && yum clean all
 
 # Remove default config
 RUN rm -rf /etc/httpd/conf/* && rm -rf /etc/httpd/conf.d/* && rm -rf /etc/httpd/conf.modules.d/*
@@ -16,14 +16,14 @@ COPY src/etc/httpd /etc/httpd
 
 # Install dispatcher
 ARG TARGETARCH
-COPY scripts/setup.sh /
+COPY src/scripts/setup.sh /
 RUN chmod +x /setup.sh
 # Ensuring correct file ending on windows systems
 RUN sed -i -e 's/\r\n/\n/' /setup.sh
 RUN ./setup.sh
 RUN rm /setup.sh
 
-COPY scripts/launch.sh /
+COPY src/scripts/launch.sh /
 # Ensuring correct file ending on windows systems
 RUN sed -i -e 's/\r\n/\n/' /launch.sh
 RUN chmod +x /launch.sh

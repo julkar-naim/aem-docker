@@ -1,13 +1,26 @@
-version: "3.9"
 
 services:
-  author:
-    image: aem-dispatcher
+  ]dispatcher:
+    image: ghcr.io/mahedisabuj/aem-docker/aem-dispatcher:1.0.0
+    container_name: dispatcher
+    environment:
+      - DISP_ID = docker
+      ## Replace value with the Author IP and Port you are using:
+      - AUTHOR_IP = 127.0.0.1
+      - AUTHOR_PORT = 4502
+      - AUTHOR_DEFAULT_HOSTNAME = aem-author
+      - AUTHOR_DOCROOT = /mnt/var/www/author
+      ## Replace value with the Publisher IP and Port you are using:
+      - PUBLISH_IP = 127.0.0.1
+      - PUBLISH_PORT = 4503
+      - PUBLISH_DEFAULT_HOSTNAME = aem-publish
+      - PUBLISH_DOCROOT = /mnt/var/www/html
+      ## Enable / Disable CRXDE access.  Production this should be disabled
+      - CRX_FILTER = allow
+      ## Allow dispatcher flush from any IP
+      - DISPATCHER_FLUSH_FROM_ANYWHERE = allow
+    tmpfs:
+      - /tmp
     ports:
       - "80:80"
-    container_name: aem-dispatcher
-    networks:
-      - aem-docker
-
-networks:
-  aem-docker:
+      - "443:443"
