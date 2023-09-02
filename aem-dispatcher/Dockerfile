@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.authors Mahedi Sabuj <sabuj.ict.mbstu@gmail.com>
 LABEL org.opencontainers.image.source https://github.com/MahediSabuj/aem-docker
 
 # Install HTTPD
-RUN yum update -y && yum install -y httpd && yum clean all
+RUN yum update -y && yum install -y httpd mod_ssl && yum clean all
 
 # Remove default config
 RUN rm -rf /etc/httpd/conf/* && rm -rf /etc/httpd/conf.d/* && rm -rf /etc/httpd/conf.modules.d/*
