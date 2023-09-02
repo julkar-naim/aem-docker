@@ -5,17 +5,31 @@ FROM redhat/ubi9
 LABEL org.opencontainers.image.authors Mahedi Sabuj <sabuj.ict.mbstu@gmail.com>
 LABEL org.opencontainers.image.source https://github.com/MahediSabuj/aem-docker
 
-# Update All Packages
-RUN yum update -y
+# Install HTTPD
+RUN yum update -y && yum install -y httpd mod_ssl && yum clean all
 
-# Install Java
-RUN yum install -y java-11-openjdk httpd
+# Remove default config
+RUN rm -rf /etc/httpd/conf/* && rm -rf /etc/httpd/conf.d/* && rm -rf /etc/httpd/conf.modules.d/*
 
-# Copy Dispatcher files
-COPY ./src /etc/httpd
+# Copy the AMS base files into the image.
+COPY src/etc/httpd /etc/httpd
 
-# Expose AEM Publish Port
-EXPOSE 80
+# Install dispatcher
+ARG TARGETARCH
+COPY src/scripts/setup.sh /
+RUN chmod +x /setup.sh
+# Ensuring correct file ending on windows systems
+RUN sed -i -e 's/\r\n/\n/' /setup.sh
+RUN ./setup.sh
+RUN rm /setup.sh
 
-# Start Apache Server including Tail Command to Keep the Procss Running
-CMD /sbin/httpd -k start && tail -F /var/log/httpd/error_log
+COPY src/scripts/launch.sh /
+# Ensuring correct file ending on windows systems
+RUN sed -i -e 's/\r\n/\n/' /launch.sh
+RUN chmod +x /launch.sh
+
+# Expose Port
+EXPOSE  80 443
+
+# Start container
+ENTRYPOINT ["/bin/bash","/launch.sh"]
