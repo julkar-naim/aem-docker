@@ -18,7 +18,7 @@ services:
     networks:
       - aem-docker
   dispatcher:
-    image: ghcr.io/mahedisabuj/aem-docker/aem-dispatcher:1.0.0
+    image: ghcr.io/mahedisabuj/aem-docker/aem-dispatcher:2.0.0
     container_name: aem-dispatcher
     environment:
       - DISP_ID=docker
