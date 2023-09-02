@@ -52,3 +52,4 @@
 ## AMS blocks suffix and selectors by default.  These are the most abused filter bypasses.  Please only allow ones that you need.
 /0025 { /type "deny" /url "/content*" /suffix "*" }
 /0026 { /type "deny" /url "/content*" /selectors "*" }
+/0029 { /type "allow" /url "/content/*" /selectors '(coreimg)' }
