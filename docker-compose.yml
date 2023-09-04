@@ -25,12 +25,12 @@ services:
       ## Replace value with the Author IP and Port you are using:
       - AUTHOR_IP=aem-author
       - AUTHOR_PORT=4502
-      - AUTHOR_DEFAULT_HOSTNAME=aem-author.com
+      - AUTHOR_DEFAULT_HOSTNAME=local.author.com
       - AUTHOR_DOCROOT=/mnt/var/www/author
       ## Replace value with the Publisher IP and Port you are using:
       - PUBLISH_IP=aem-publish
       - PUBLISH_PORT=4503
-      - PUBLISH_DEFAULT_HOSTNAME=aem-publish.com
+      - PUBLISH_DEFAULT_HOSTNAME=local.publish.com
       - PUBLISH_DOCROOT=/mnt/var/www/html
       ## Enable / Disable CRXDE access.  Production this should be disabled
       - CRX_FILTER=allow
