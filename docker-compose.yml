@@ -8,7 +8,10 @@ services:
       - "9511:9511"
     container_name: aem-author
     networks:
-      - aem-docker
+      aem-docker:
+        ipv4_address: 172.18.0.2
+    volumes:
+      - author_data:/mnt/crx/author/crx-quickstart    
   publish:
     image: ghcr.io/mahedisabuj/aem-docker/aem-publish:6.5.16
     ports:
@@ -16,19 +19,22 @@ services:
       - "9512:9512"
     container_name: aem-publish
     networks:
-      - aem-docker
+      aem-docker:
+        ipv4_address: 172.18.0.3
+    volumes:
+      - publish_data:/mnt/crx/publish/crx-quickstart
   dispatcher:
     image: ghcr.io/mahedisabuj/aem-docker/aem-dispatcher:2.0.0
     container_name: aem-dispatcher
     environment:
       - DISP_ID=docker
       ## Replace value with the Author IP and Port you are using:
-      - AUTHOR_IP=aem-author
+      - AUTHOR_IP=172.18.0.2
       - AUTHOR_PORT=4502
       - AUTHOR_DEFAULT_HOSTNAME=local.author.com
       - AUTHOR_DOCROOT=/mnt/var/www/author
       ## Replace value with the Publisher IP and Port you are using:
-      - PUBLISH_IP=aem-publish
+      - PUBLISH_IP=172.18.0.3
       - PUBLISH_PORT=4503
       - PUBLISH_DEFAULT_HOSTNAME=local.publish.com
       - PUBLISH_DOCROOT=/mnt/var/www/html
@@ -42,7 +48,20 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - aem-docker
+      aem-docker:
+        ipv4_address: 172.18.0.4
+    volumes:
+      - dispatcher_config:/etc/httpd
+      - discpatcher_cache:/mnt/var/www/html
+
+volumes:
+  author_data:
+  publish_data:
+  dispatcher_config:
+  discpatcher_cache:
 
 networks:
   aem-docker:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
