@@ -1,17 +1,15 @@
-version: "3.9"
-
 services:
   author:
     image: ghcr.io/mahedisabuj/aem-docker/aem-author:6.5.16
     ports:
       - "4502:4502"
       - "9511:9511"
+      - "8443:8443"
     container_name: aem-author
     networks:
       aem-docker:
         ipv4_address: 172.18.0.2
-    volumes:
-      - author_data:/mnt/crx/author/crx-quickstart    
+
   publish:
     image: ghcr.io/mahedisabuj/aem-docker/aem-publish:6.5.16
     ports:
@@ -21,11 +19,10 @@ services:
     networks:
       aem-docker:
         ipv4_address: 172.18.0.3
-    volumes:
-      - publish_data:/mnt/crx/publish/crx-quickstart
+
   dispatcher:
-    image: ghcr.io/mahedisabuj/aem-docker/aem-dispatcher:2.0.0
-    container_name: aem-dispatcher
+    image: ghcr.io/julkar-naim/dispatcher:2.6
+    container_name: dispatcher
     environment:
       - DISP_ID=docker
       ## Replace value with the Author IP and Port you are using:
@@ -38,27 +35,35 @@ services:
       - PUBLISH_PORT=4503
       - PUBLISH_DEFAULT_HOSTNAME=local.publish.com
       - PUBLISH_DOCROOT=/mnt/var/www/html
+      ## Replace value with the LiveCycle IP and Port you are using:
+      # - LIVECYCLE_IP=127.0.0.1
+      # - LIVECYCLE_PORT=8080
+      # - LIVECYCLE_DEFAULT_HOSTNAME=aemforms-exampleco-dev.adobecqms.net
+      # - LIVECYCLE_DOCROOT=/mnt/var/www/lc
+      - PUBLISH_FORCE_SSL=0
+      - AUTHOR_FORCE_SSL=0
       ## Enable / Disable CRXDE access.  Production this should be disabled
       - CRX_FILTER=allow
       ## Allow dispatcher flush from any IP
       - DISPATCHER_FLUSH_FROM_ANYWHERE=allow
+
+    volumes:
+      - ./ams/2.6/etc/httpd/conf:/etc/httpd/conf:ro,Z
+      - ./ams/2.6/etc/httpd/conf.d:/etc/httpd/conf.d:ro,Z
+      - ./ams/2.6/etc/httpd/conf.dispatcher.d:/etc/httpd/conf.dispatcher.d:ro,Z
+      - ./ams/2.6/etc/httpd/conf.modules.d:/etc/httpd/conf.modules.d:ro,Z
+      - ./mnt/author_docroot:/var/www/author:rw,Z
+      - ./mnt/publish_docroot:/var/www/html:rw,Z
+      - ./mnt/log:/var/log/httpd:rw,Z
     tmpfs:
       - /tmp
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:8080
+      - 443:8443
     networks:
       aem-docker:
         ipv4_address: 172.18.0.4
-    volumes:
-      - dispatcher_config:/etc/httpd
-      - discpatcher_cache:/mnt/var/www/html
 
-volumes:
-  author_data:
-  publish_data:
-  dispatcher_config:
-  discpatcher_cache:
 
 networks:
   aem-docker:
