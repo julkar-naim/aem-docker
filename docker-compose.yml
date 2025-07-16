@@ -1,21 +1,29 @@
 services:
   author:
-    image: ghcr.io/mahedisabuj/aem-docker/aem-author:6.5.16
+    image: ghcr.io/julkar-naim/aem-author:6.5.21
     ports:
       - "4502:4502"
-      - "9511:9511"
       - "8443:8443"
+      - "9511:9511"
     container_name: aem-author
+    environment:
+          - CQ_PORT=4502
+          - CQ_RUNMODE=author,local
+          - CQ_JVM_OPTS=-Xmx2048m -XX:+UseG1GC -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9511
     networks:
       aem-docker:
         ipv4_address: 172.18.0.2
 
   publish:
-    image: ghcr.io/mahedisabuj/aem-docker/aem-publish:6.5.16
+    image: ghcr.io/julkar-naim/aem-publish:6.5.21
     ports:
       - "4503:4503"
       - "9512:9512"
     container_name: aem-publish
+    environment:
+          - CQ_PORT=4503
+          - CQ_RUNMODE=publish,local
+          - CQ_JVM_OPTS=-Xmx2048m -XX:+UseG1GC -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:9512
     networks:
       aem-docker:
         ipv4_address: 172.18.0.3

@@ -8,3 +8,6 @@ license.properties
 
 #IntelijIdea
 .idea
+
+#ignore mounts
+mnt/
