@@ -1,0 +1,1 @@
+RewriteRule ^/fa/shared/(.*) /content/dam/fa-component/shared/$1 [NC,PT,L]

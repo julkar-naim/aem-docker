@@ -1,6 +1,6 @@
 services:
   author:
-    image: ghcr.io/julkar-naim/aem-author:6.5.21
+    image: ghcr.io/mahedisabuj/aem-docker/aem-author:6.5.16
     ports:
       - "4502:4502"
       - "8443:8443"
@@ -15,7 +15,7 @@ services:
         ipv4_address: 172.18.0.2
 
   publish:
-    image: ghcr.io/julkar-naim/aem-publish:6.5.21
+    image: ghcr.io/mahedisabuj/aem-docker/aem-publish:6.5.16
     ports:
       - "4503:4503"
       - "9512:9512"
@@ -34,10 +34,14 @@ services:
     environment:
       - DISP_ID=docker
       ## Replace value with the Author IP and Port you are using:
-      - AUTHOR_IP=172.18.0.2
-      - AUTHOR_PORT=4502
-      - AUTHOR_DEFAULT_HOSTNAME=local.author.com
+      # - AUTHOR_IP=172.18.0.2
+      # - AUTHOR_PORT=4502
+      # - AUTHOR_DEFAULT_HOSTNAME=local.author.com
       - AUTHOR_DOCROOT=/mnt/var/www/author
+      ## Melco author:
+      - MELCO_AUTHOR_IP=172.18.0.2
+      - MELCO_AUTHOR_PORT=4502
+      - MELCO_AUTHOR_HOSTNAME=local.author.com
       ## Replace value with the Publisher IP and Port you are using:
       - PUBLISH_IP=172.18.0.3
       - PUBLISH_PORT=4503
@@ -50,6 +54,8 @@ services:
       # - LIVECYCLE_DOCROOT=/mnt/var/www/lc
       - PUBLISH_FORCE_SSL=0
       - AUTHOR_FORCE_SSL=0
+      - AUTHOR_FORCE_SSL=0
+      - MELCO_AUTHOR_FORCE_SSL=0
       ## Enable / Disable CRXDE access.  Production this should be disabled
       - CRX_FILTER=allow
       ## Allow dispatcher flush from any IP
@@ -67,7 +73,7 @@ services:
       - /tmp
     ports:
       - 80:8080
-      - 443:8443
+      # - 443:8443
     networks:
       aem-docker:
         ipv4_address: 172.18.0.4

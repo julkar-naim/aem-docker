@@ -1,0 +1,6 @@
+## Add values for author instances you'll pull content from
+/0 {
+  /hostname "${MELCO_AUTHOR_IP}"
+  /port "${MELCO_AUTHOR_PORT}"
+  /timeout "10000"
+}
