@@ -48,14 +48,18 @@ services:
       - PUBLISH_DEFAULT_HOSTNAME=local.publish.com
       - PUBLISH_DOCROOT=/mnt/var/www/html
       ## Replace value with the LiveCycle IP and Port you are using:
+      ## Replace value with the Publisher IP and Port you are using:
+      - MELCO_PUBLISH_IP=172.18.0.3
+      - MELCO_PUBLISH_PORT=4503
+      - MELCO_GLOBAL_DOMAIN=local.mitsubishielectric.com
       # - LIVECYCLE_IP=127.0.0.1
       # - LIVECYCLE_PORT=8080
       # - LIVECYCLE_DEFAULT_HOSTNAME=aemforms-exampleco-dev.adobecqms.net
       # - LIVECYCLE_DOCROOT=/mnt/var/www/lc
-      - PUBLISH_FORCE_SSL=0
-      - AUTHOR_FORCE_SSL=0
-      - AUTHOR_FORCE_SSL=0
+      # - PUBLISH_FORCE_SSL=0
+      # - AUTHOR_FORCE_SSL=0
       - MELCO_AUTHOR_FORCE_SSL=0
+      - MELCO_PUBLISH_FORCE_SSL=0
       ## Enable / Disable CRXDE access.  Production this should be disabled
       - CRX_FILTER=allow
       ## Allow dispatcher flush from any IP
@@ -66,8 +70,8 @@ services:
       - ./ams/2.6/etc/httpd/conf.d:/etc/httpd/conf.d:ro,Z
       - ./ams/2.6/etc/httpd/conf.dispatcher.d:/etc/httpd/conf.dispatcher.d:ro,Z
       - ./ams/2.6/etc/httpd/conf.modules.d:/etc/httpd/conf.modules.d:ro,Z
-      - ./mnt/author_docroot:/var/www/author:rw,Z
-      - ./mnt/publish_docroot:/var/www/html:rw,Z
+      - ./mnt/author_docroot:/mnt/var/www/author:rw,Z
+      - ./mnt/publish_docroot:/mnt/var/www/html:rw,Z
       - ./mnt/log:/var/log/httpd:rw,Z
     tmpfs:
       - /tmp

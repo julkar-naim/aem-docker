@@ -1,1 +1,2 @@
 RewriteRule ^/fa/shared/(.*) /content/dam/fa-component/shared/$1 [NC,PT,L]
+RewriteRule ^/fa/(.*)/$ /content/web/prod/factory-automation/FA_com/$1/index.html [NC,PT,L]
